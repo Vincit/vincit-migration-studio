@@ -421,3 +421,8 @@ export function useStudio(): StudioApi {
   if (!v) throw new Error('useStudio must be used inside StudioProvider');
   return v;
 }
+
+/** The studio, or undefined where no project is open (the home page). */
+export function useOptionalStudio(): StudioApi | undefined {
+  return useContext(Ctx);
+}

@@ -1,5 +1,6 @@
 import { Button, MessageBar, MessageBarBody, Spinner } from '@fluentui/react-components';
 import { useState } from 'react';
+import { CommandLine } from '../commandline/CommandLine';
 import { Brand } from '../components/brand';
 import { useWorkspace } from '../workspace';
 import { CustomerHome } from './CustomerHome';
@@ -80,6 +81,7 @@ export function Home() {
       <HomePages />
       <StorageDialog open={ws.storageDialog} onClose={() => ws.setStorageDialog(false)} />
       <WorkspaceChoiceDialog />
+      <CommandLine />
     </>
   );
 }

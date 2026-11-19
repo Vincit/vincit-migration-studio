@@ -148,7 +148,9 @@ export const COMMANDS: readonly Command[] = [
     usage: 'diag [error|warning|info]',
     help: 'Show problems found in the project, optionally by severity.',
     run: (args, ctx) => {
-      const list = args[0] ? ctx.diagnostics.filter((d) => d.severity === args[0]) : ctx.diagnostics;
+      const list = args[0]
+        ? ctx.diagnostics.filter((d) => d.severity === args[0])
+        : ctx.diagnostics;
       if (list.length === 0) return ['No problems.'];
       return list.slice(0, 50).map((d) => `[${d.severity}] ${d.code}: ${d.message}`);
     },

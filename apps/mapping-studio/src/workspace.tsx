@@ -26,6 +26,7 @@ import {
   writeProject,
   type BusinessObject,
   type CustomerEntry,
+  type FilePort,
   type NestedWorkspace,
   type ObjectEntry,
   type RunEntry,
@@ -156,6 +157,8 @@ export interface WorkspaceApi {
   resolveConflict: (choice: 'theirs' | 'mine') => Promise<void>;
   /** Changes when the open project is reloaded from disk, so the screen starts again from it. */
   openNonce: number;
+  /** The file port of the chosen workspace folder, for the command line. Undefined until a folder is ready. */
+  getPort: () => FilePort | undefined;
   customers: CustomerEntry[];
   /** The customer whose home is shown; undefined shows All customers. */
   customerFolder: string | undefined;
@@ -257,6 +260,7 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   const pending = useRef<string | undefined>(undefined);
   const permissionHandle = useRef<FileSystemDirectoryHandle | undefined>(undefined);
   const ctxRef = useRef<StoreContext | undefined>(undefined);
+  const getPort = useCallback((): FilePort | undefined => ctxRef.current?.port, []);
   const revision = useRef(0);
   const openRef = useRef<OpenObject | undefined>(undefined);
   const started = useRef(false);
@@ -819,6 +823,7 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
       markRowsLoaded: () => setRowsLoaded(true),
       conflict,
       openNonce,
+      getPort,
       resolveConflict: async (choice) => {
         const ctx = ctxRef.current;
         const o = openRef.current;
@@ -1019,6 +1024,7 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
       openNonce,
       persist,
       switchTo,
+      getPort,
       prepareRoot,
       loadAll,
       refreshCustomers,

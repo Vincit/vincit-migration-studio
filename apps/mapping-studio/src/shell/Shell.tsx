@@ -22,6 +22,7 @@ import { Brand } from '../components/brand';
 import { useOptionalWorkspace } from '../workspace';
 import { datasetsWithoutData } from '@mms/studio-model';
 import { deleteFromLibrary, listProjects } from '../lib/storage';
+import { CommandLine } from '../commandline/CommandLine';
 import { MapStage } from '../stages/MapStage';
 import { ReadyStage } from '../stages/ReadyStage';
 import { SourcesStage } from '../stages/SourcesStage';
@@ -407,6 +408,7 @@ export function Shell() {
           {stage === 'ready' && <ReadyStage />}
         </main>
       </div>
+      <CommandLine />
       <Dialog open={workspace?.conflict !== undefined} modalType="alert">
         <DialogSurface aria-label="Changed elsewhere">
           <DialogBody>
